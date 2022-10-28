@@ -41,9 +41,7 @@ Helper functions for Alpha-beta and Expectimax:
            are to getting a connect four
         c) Look at game_completed function as a hint
 
-References: 
-    1. https://www.youtube.com/watch?v=MMLtza3CZFM&t=4982s 
-    2. Infinity values: https://www.geeksforgeeks.org/python-infinity/ 
+References: Infinity values: https://www.geeksforgeeks.org/python-infinity/ 
 """
 
 # print depth everytime
