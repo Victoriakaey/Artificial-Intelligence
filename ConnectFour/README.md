@@ -14,7 +14,7 @@ Or, if I don't want to set a time constraint to the AI player, I will simply jus
 
     ConnectFour.py human ai
     
----------------------------------------------------------   About this program   ------------------------------------------------------------
+---------------------------------------------------------   About this program   -------------------------------------------------------------
 
 1. Implement an AI agent to play the game Connect 4 against a human player (which will take user input move from terminal), a random player (which it will choose from valid columns with equal probability) or another AI player. 
 
