@@ -1,4 +1,4 @@
-------------------------------------------------------  How to run the program  -----------------------------------------------
+-------------------------------------------------------  How to run the program  ------------------------------------------------------
 
 To run the code, write the following command in terminal after locating to the path of the file:
 
