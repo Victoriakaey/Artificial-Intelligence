@@ -27,6 +27,7 @@ Alpha-beta functions:
 Helper functions for Alpha-beta and Expectimax:
     1. Successors_helper_function:
         a) Sucessor is a board with updated values in it to represent making a move in a given column
+           --> successor is the potential moves (7 copies of the board, each with the possible moves)
         b) There will have seven different successor states for the board 
         c) When creating successor states, be sure to create a copy of your board as you're doing it, 
            because you don't want to mainipulating the same object multiple times under the hood, and 
@@ -43,8 +44,6 @@ Helper functions for Alpha-beta and Expectimax:
 
 References: Infinity values: https://www.geeksforgeeks.org/python-infinity/ 
 """
-
-# print depth everytime
 
 import numpy as np
 
@@ -159,15 +158,6 @@ class AIPlayer:
         utility_list.append(check_verticle(board))
         utility_list.append(check_diagonal(board))
         return sum(utility_list)
-
-    # value: reached the maximum depth or winning states met
-    # 1. max: 
-    #   for each successor of state, use utility helper functin to calculate each state for the sucessor
-    #   there will be 7 of those
-    # 2. min:
-    # for the single state that was seleced for step 1
-    # 3. terminate by when the value reached the maximum depth or winning states met
-
     
     def get_alpha_beta_move(self, board):
         
@@ -195,10 +185,9 @@ class AIPlayer:
             # flag counter for the MAX according to level
             if depth%2 == 0: MAX = True
             else: MAX = False
-            # print(depth)
-            # if the state is a terminal state: return the state's utiltiy
+            # if the state is a terminal state (when the value reached the maximum depth or winning states met)
+            # return the state's utiltiy
             if depth == self.maxDepth or self.game_completed_helper_function(board, player_number):
-                # print("ab", depth)
                 return self.evaluation_function(board), None
             # if the next agent is MAX: return max_value(state)
             if MAX:
@@ -218,7 +207,8 @@ class AIPlayer:
             # potential successor states
             potential_successors = self.successors_helper_function(board, player_number)[0]
             potential_successors_index = self.successors_helper_function(board, player_number)[1]
-            # if the state is a terminal state: return the state's utiltiy
+            # if the state is a terminal state (when the value reached the maximum depth or winning states met)
+            # return the state's utiltiy
             if depth == self.maxDepth or self.game_completed_helper_function(board, player_number):
                 return self.evaluation_function(board), None
             # for each successor of state:
@@ -229,16 +219,8 @@ class AIPlayer:
                     move = potential_successors_index[i] 
                 if v >= beta: return v, None
                 alpha = max(alpha, v)
-            
-            # move = max(potential_successors_index) # ?!!!!!!
-            # update my best move value -> column index of the successor use python enumerate function 
-            # enumerate through my potential successor
-            # whatever that index is 
-            
-            # return v and the column index 
             return v, move
         
-        # do the same thing here 
         def min_value(self, board, depth, alpha, beta, player_number):
             # initialize v to +inf
             v = np.inf
@@ -246,7 +228,8 @@ class AIPlayer:
             # potential successor states
             potential_successors = self.successors_helper_function(board, player_number)[0]
             potential_successors_index = self.successors_helper_function(board, player_number)[1]
-            # if the state is a terminal state: return the state's utiltiy
+            # if the state is a terminal state (when the value reached the maximum depth or winning states met)
+            # return the state's utiltiy
             if depth == self.maxDepth or self.game_completed_helper_function(board, player_number):
                 return self.evaluation_function(board), None
             # for each successor state:
@@ -264,20 +247,9 @@ class AIPlayer:
         depth = 0
         alpha = -np.inf
         beta = np.inf
-        # value and index
         return value_alpha_beta(self, board, depth, alpha, beta, self.player_number)[1]
         raise NotImplementedError('Whoops I don\'t know what to do')
 
-
-    # get the average?? 
-    # value: reached the maximum depth or winning states met
-    # find the average utility for the successors
-    # 1. max: 
-    #   for each successor of state, use utility helper functin to calculate each state for the sucessor
-    #   there will be 7 of those
-    # 2. exp:
-    # takes the average of the probability
-    # same as taking the min value of each successor
     def get_expectimax_move(self, board):
         """
         Given the current state of the board, return the next move based on
@@ -305,9 +277,9 @@ class AIPlayer:
             # flag counter for the MAX according to level
             if depth%2 == 0: MAX = True
             else: MAX = False
-            # print(depth)
+            # if the state is a terminal state (when the value reached the maximum depth or winning states met)
+            # return the state's utiltiy
             if depth == self.maxDepth or self.game_completed_helper_function(board, player_number):
-                # print("e", depth)
                 return self.evaluation_function(board), None
             # if the next agent is MAX: return max_value(state)
             if MAX:
@@ -325,8 +297,8 @@ class AIPlayer:
             # potential successor states
             potential_successors = self.successors_helper_function(board, player_number)[0]
             potential_successors_index = self.successors_helper_function(board, player_number)[1]
-            # check if it's the terminal states
-            # print(potential_successors_index)
+            # if the state is a terminal state (when the value reached the maximum depth or winning states met)
+            # return the state's utiltiy
             if depth == self.maxDepth or self.game_completed_helper_function(board, player_number):
                 return self.evaluation_function(board), None
             # for each successor of state:
@@ -366,8 +338,6 @@ class AIPlayer:
 
 
     # for averaging the utilities for states
-    # successor is the potential moves (7 copies of the board, each with the possible moves)
-    # check this afterwards
     def evaluation_function(self, board):
         """
         Given the current stat of the board, return the scalar value that 
